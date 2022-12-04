@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="POST" enctype="multipart/form-data" class="m-3">
+    {% csrf_token %} 
+    <h2>Importar Documentos</h2>
+    <div class="row">
+        <div class="col-md-6 col-xs-12">
+            <label for="control" class="form-label">Control</label>
+            <input type="file" name="control" class="form-control" id="control">
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <label for="consumo" class="form-label">Consumo</label>
+            <input type="file" name="consumo" class="form-control" id="consumo">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-xs-12">
+            <label for="movimiento" class="form-label">Movimiento</label>
+            <input type="file" name="movimiento" class="form-control" id="movimiento">
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <label for="subsidio" class="form-label">Subsidio</label>
+            <input type="file" name="subsidio" class="form-control" id="subsidio"><br>
+            <button type="submit" class="btn btn-primary float-right" >Subir documentos</button>
+            <a class="btn btn-success float-right" href="{% url 'util:exportar' %}">Exportar</a>
+        </div>
+    </div>
+</form>
+{% endblock %}
