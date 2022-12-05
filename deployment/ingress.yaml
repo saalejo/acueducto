@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+  name: acueducto-ingress
+  namespace: acueducto-florida
+spec:
+  rules:
+  - host: florida.agapanto.com.co
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: acueducto-svc
+            port:
+              number: 8080
+  tls:
+  - hosts:
+    - florida.agapanto.com.co
+    secretName: florida-acueducto-com-co

@@ -22,6 +22,9 @@ meses = [
     'diciembre',
 ]
 
+meses30 = [11, 4, 6, 8]
+meses31 = [1, 3, 5, 7, 9, 12]
+
 def importarDocumento(archivo, resource):
     dataset = Dataset()
     dataset.load(archivo.read())
@@ -44,8 +47,16 @@ def lecturas(subsidio, consumo):
     if anoSubsidio == anoConsumo and subsidio.fecmvt <= consumo.feccon:        
         lecturaActual = getattr(consumo, mesSubsidio)
         lecturaAnterior = getattr(consumo, mesAnteriorSubsidio)
-        consumo.lecturaActual = lecturaActual
-        consumo.lecturaAnterior = lecturaAnterior
+        consumo.lecturaActual = int(float(lecturaActual))
+        consumo.lecturaAnterior = int(float(lecturaAnterior))
+        mes = int(subsidio.fecmvt[5:7])
+        if mes > 1:
+            anterior =  mes - 1
+        else:
+            anterior =  12
+        diaFin = '31' if anterior in meses31 else '30' if anterior in meses30 else '28'
+        consumo.desde = f'{anoSubsidio}-{anterior}-01'
+        consumo.hasta = f'{anoSubsidio}-{anterior}-{ diaFin }'
 
 def generarDocumento(fecha):
     movimientosNombre = 'Movimientos'
@@ -60,7 +71,8 @@ def generarDocumento(fecha):
     for subsidio in subsidios:
         for elemento in elementos:
             if elemento.nombre != movimientosNombre:
-                consumo = Consumo.objects.get(codcte=subsidio.nitcte)
+                anoSubsidio, mesSubsidio, mesAnteriorSubsidio = anoMes(subsidio.fecmvt)
+                consumo = Consumo.objects.filter(codcte=subsidio.nitcte, feccon__contains=anoSubsidio).first()
                 lecturas(subsidio, consumo)
                 texto = eval(elemento.formula)
                 p.drawString(elemento.x, elemento.y, str(texto))
@@ -69,7 +81,7 @@ def generarDocumento(fecha):
         avance = 0
         for movimiento in movimientos:
             if float(movimiento.debito) == 0 and float(movimiento.credito) > 0:
-                p.drawString(elemento.x, elemento.y + avance, movimiento.credito)
+                p.drawString(elemento.x, elemento.y + avance, '{:,}'.format(int(float(movimiento.credito))))
                 p.drawString(elemento.x + 50, elemento.y + avance, movimiento.desmvt)
                 avance += 20
         p.showPage()
