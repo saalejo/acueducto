@@ -18,7 +18,7 @@ class Control(models.Model):
     
     class Meta:
         verbose_name_plural = "controles"
-        unique_together = ('empresa', 'codemp', 'nit')
+        # unique_together = ('empresa', 'codemp', 'nit')
 
 class Consumo(models.Model):
     vereda = models.CharField(max_length=255, null=True, blank=True, default=None)
@@ -55,8 +55,8 @@ class Consumo(models.Model):
     def __str__(self):
         return self.codcte
     
-    class Meta:
-        unique_together = ('codcte', 'feccon')
+    # class Meta:
+    #     unique_together = ('codcte', 'feccon')
 
 class Movimiento(models.Model):
     codage = models.CharField(max_length=255, null=True, blank=True, default=None)
@@ -74,8 +74,8 @@ class Movimiento(models.Model):
     def __str__(self):
         return self.nitcte
     
-    class Meta:
-        unique_together = ('nitcte', 'desmvt', 'fecha')
+    # class Meta:
+    #     unique_together = ('nitcte', 'desmvt', 'fecha')
 
 class Subsidio(models.Model):
     factura = models.CharField(max_length=255, null=True, blank=True, default=None)
@@ -92,8 +92,8 @@ class Subsidio(models.Model):
     def __str__(self):
         return self.factura
     
-    class Meta:
-        unique_together = ('factura', 'nitcte')
+    # class Meta:
+    #     unique_together = ('factura', 'nitcte')
 
 class Elemento(models.Model):
     nombre = models.CharField(max_length=255, null=True, blank=True, default=None)
@@ -103,3 +103,6 @@ class Elemento(models.Model):
     
     def __str__(self):
         return self.nombre
+    
+    class Meta:
+        ordering = ['nombre']

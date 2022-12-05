@@ -1,7 +1,5 @@
 from django.shortcuts import render
-from tablib import Dataset
 from util.helpers import generarDocumento, importarDocumento
-from util.models import Elemento, Subsidio
 from util.resources import ConsumoResource, ControlResource, MovimientoResource, SubsidioResource
 
 documentos = [
@@ -12,15 +10,12 @@ documentos = [
 ]
 
 def inicio(request):   
-    if request.method == 'POST' :
+    if request.method == 'POST':
         for clave, valor in documentos:
-            if clave in request.FILES:
-                importarDocumento(
-                    request.FILES[clave],
-                    valor
-                )
-    return render(request, 'inicio.html', {}) 
+            if clave in request.FILES and request.FILES[clave] != None:
+                importarDocumento(request.FILES[clave], valor)
+    context = { 'mensaje': 'Documentos importados con exito' }
+    return render(request, 'inicio.html', context) 
 
-def exportar(request):
-    elementos = Elemento.objects.all()
-    return generarDocumento(elementos)
+def exportar(request, fecha=None):
+    return generarDocumento(fecha)
