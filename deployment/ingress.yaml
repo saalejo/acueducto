@@ -8,7 +8,7 @@ metadata:
   namespace: acueducto-florida
 spec:
   rules:
-  - host: florida.agapanto.com.co
+  - host: laflorida.agapanto.com.co
     http:
       paths:
       - path: /
@@ -20,5 +20,5 @@ spec:
               number: 8080
   tls:
   - hosts:
-    - florida.agapanto.com.co
+    - laflorida.agapanto.com.co
     secretName: florida-acueducto-com-co
