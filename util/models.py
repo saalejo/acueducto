@@ -74,8 +74,9 @@ class Movimiento(models.Model):
     def __str__(self):
         return self.nitcte
     
-    # class Meta:
+    class Meta:
     #     unique_together = ('nitcte', 'desmvt', 'fecha')
+        ordering = ['nitcte', '-codcon']
 
 class Subsidio(models.Model):
     factura = models.CharField(max_length=255, null=True, blank=True, default=None)
