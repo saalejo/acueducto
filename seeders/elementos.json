@@ -1,232 +1,232 @@
 [
-    {
-        "model": "util.models.admin",
-        "pk": 1,
-        "fields": {
-            "formula": "subsidio.usuario",
-            "nombre": "Usuario",
-            "x": 50,
-            "y": 700
-        }
-    },
-    {
-        "model": "util.models.admin",
-        "pk": 2,
-        "fields": {
-            "formula": "subsidio.fecmvt[:10]",
-            "nombre": "Fecha",
-            "x": 450,
-            "y": 800
-        }
-    },
-    {
-        "model": "util.models.admin",
-        "pk": 3,
-        "fields": {
-            "formula": "subsidio.factura",
-            "nombre": "Numero Factura",
-            "x": 50,
-            "y": 750
-        }
-    },
-    {
-        "model": "util.models.admin",
-        "pk": 4,
-        "fields": {
-            "formula": "subsidio.nitcte",
-            "nombre": "Derecho",
-            "x": 450,
-            "y": 750
-        }
-    },
-    {
-        "model": "util.models.admin",
-        "pk": 5,
-        "fields": {
-            "formula": "consumo.vereda",
-            "nombre": "Vereda",
-            "x": 450,
-            "y": 700
-        }
-    },
-    {
-        "model": "util.models.admin",
-        "pk": 6,
-        "fields": {
-            "formula": "int(float(subsidio.estrato))",
-            "nombre": "Estrato",
-            "x": 400,
-            "y": 700
-        }
-    },
-    {
-        "model": "util.models.admin",
-        "pk": 7,
-        "fields": {
-            "formula": "'{:,}'.format(int(float(subsidio.debito)))",
-            "nombre": "Total a pagar",
-            "x": 50,
-            "y": 500
-        }
-    },
-    {
-        "model": "util.models.admin",
-        "pk": 8,
-        "fields": {
-            "formula": "'{:,}'.format(int(float(subsidio.abonosub)))",
-            "nombre": "Valor subsidio",
-            "x": 450,
-            "y": 500
-        }
-    },
-    {
-        "model": "util.models.admin",
-        "pk": 9,
-        "fields": {
-            "formula": "subsidio.saldosub",
-            "nombre": "Saldo subsidio",
-            "x": 730,
-            "y": 700
-        }
-    },
-    {
-        "model": "util.models.admin",
-        "pk": 10,
-        "fields": {
-            "formula": "consumo.desde",
-            "nombre": "Consumo desde",
-            "x": 300,
-            "y": 400
-        }
-    },
-    {
-        "model": "util.models.admin",
-        "pk": 11,
-        "fields": {
-            "formula": "consumo.hasta",
-            "nombre": "Consumo hasta",
-            "x": 300,
-            "y": 380
-        }
-    },
-    {
-        "model": "util.models.admin",
-        "pk": 12,
-        "fields": {
-            "formula": "'Valor Subsidio Ministerio de Vivienda (Covid12)(-)'",
-            "nombre": "Texto subsidio",
-            "x": 120,
-            "y": 500
-        }
-    },
-    {
-        "model": "util.models.admin",
-        "pk": 13,
-        "fields": {
-            "formula": "consumo.lecturaActual",
-            "nombre": "Lectura actual",
-            "x": 300,
-            "y": 480
-        }
-    },
-    {
-        "model": "util.models.admin",
-        "pk": 14,
-        "fields": {
-            "formula": "consumo.lecturaAnterior",
-            "nombre": "Lectura anteriol",
-            "x": 300,
-            "y": 460
-        }
-    },
-    {
-        "model": "util.models.admin",
-        "pk": 15,
-        "fields": {
-            "formula": "int(float(consumo.lecturaActual) - float(consumo.lecturaAnterior))",
-            "nombre": "Consumo Metro cubico",
-            "x": 300,
-            "y": 440
-        }
-    },
-    {
-        "model": "util.models.admin",
-        "pk": 16,
-        "fields": {
-            "formula": "numero_a_letras(float(subsidio.debito)).upper()",
-            "nombre": "Total en letras",
-            "x": 100,
-            "y": 530
-        }
-    },
-    {
-        "model": "util.models.admin",
-        "pk": 17,
-        "fields": {
-            "formula": "subsidio.usuario",
-            "nombre": "0Usuario",
-            "x": 50,
-            "y": 150
-        }
-    },
-    {
-        "model": "util.models.admin",
-        "pk": 18,
-        "fields": {
-            "formula": "subsidio.factura",
-            "nombre": "0Numero Factura",
-            "x": 50,
-            "y": 170
-        }
-    },
-    {
-        "model": "util.models.admin",
-        "pk": 19,
-        "fields": {
-            "formula": "subsidio.nitcte",
-            "nombre": "0Derecho",
-            "x": 450,
-            "y": 170
-        }
-    },
-    {
-        "model": "util.models.admin",
-        "pk": 20,
-        "fields": {
-            "formula": "int(float(subsidio.estrato))",
-            "nombre": "0Estrato",
-            "x": 400,
-            "y": 150
-        }
-    },
-    {
-        "model": "util.models.admin",
-        "pk": 21,
-        "fields": {
-            "formula": "consumo.vereda",
-            "nombre": "0Vereda",
-            "x": 450,
-            "y": 150
-        }
-    },
-    {
-        "model": "util.models.admin",
-        "pk": 22,
-        "fields": {
-            "formula": "'{:,}'.format(int(float(subsidio.debito)))",
-            "nombre": "0Total a pagar",
-            "x": 450,
-            "y": 100
-        }
-    },
-    {
-        "model": "util.models.admin",
-        "pk": 23,
-        "fields": {
-            "formula": null,
-            "nombre": "Movimientos",
-            "x": 100,
-            "y": 600
-        }
+{
+    "model": "util.elemento",
+    "pk": 1,
+    "fields": {
+        "nombre": "Usuario",
+        "formula": "subsidio.usuario",
+        "x": 50,
+        "y": 700
     }
+},
+{
+    "model": "util.elemento",
+    "pk": 2,
+    "fields": {
+        "nombre": "Fecha",
+        "formula": "subsidio.fecmvt[:10]",
+        "x": 450,
+        "y": 800
+    }
+},
+{
+    "model": "util.elemento",
+    "pk": 3,
+    "fields": {
+        "nombre": "Numero Factura",
+        "formula": "subsidio.factura",
+        "x": 50,
+        "y": 750
+    }
+},
+{
+    "model": "util.elemento",
+    "pk": 4,
+    "fields": {
+        "nombre": "Derecho",
+        "formula": "subsidio.nitcte",
+        "x": 450,
+        "y": 750
+    }
+},
+{
+    "model": "util.elemento",
+    "pk": 5,
+    "fields": {
+        "nombre": "Vereda",
+        "formula": "consumo.vereda",
+        "x": 450,
+        "y": 700
+    }
+},
+{
+    "model": "util.elemento",
+    "pk": 6,
+    "fields": {
+        "nombre": "Estrato",
+        "formula": "int(float(subsidio.estrato))",
+        "x": 400,
+        "y": 700
+    }
+},
+{
+    "model": "util.elemento",
+    "pk": 7,
+    "fields": {
+        "nombre": "Total a pagar",
+        "formula": "'{:,}'.format(int(float(subsidio.debito)))",
+        "x": 50,
+        "y": 500
+    }
+},
+{
+    "model": "util.elemento",
+    "pk": 8,
+    "fields": {
+        "nombre": "Valor subsidio",
+        "formula": "'{:,}'.format(int(float(subsidio.abonosub)))",
+        "x": 450,
+        "y": 500
+    }
+},
+{
+    "model": "util.elemento",
+    "pk": 9,
+    "fields": {
+        "nombre": "Saldo subsidio",
+        "formula": "subsidio.saldosub",
+        "x": 730,
+        "y": 700
+    }
+},
+{
+    "model": "util.elemento",
+    "pk": 10,
+    "fields": {
+        "nombre": "Consumo desde",
+        "formula": "consumo.desde",
+        "x": 300,
+        "y": 400
+    }
+},
+{
+    "model": "util.elemento",
+    "pk": 11,
+    "fields": {
+        "nombre": "Consumo hasta",
+        "formula": "consumo.hasta",
+        "x": 300,
+        "y": 380
+    }
+},
+{
+    "model": "util.elemento",
+    "pk": 12,
+    "fields": {
+        "nombre": "Texto subsidio",
+        "formula": "'Valor Subsidio Ministerio de Vivienda (Covid12)(-)'",
+        "x": 120,
+        "y": 500
+    }
+},
+{
+    "model": "util.elemento",
+    "pk": 13,
+    "fields": {
+        "nombre": "Lectura actual",
+        "formula": "consumo.lecturaActual",
+        "x": 300,
+        "y": 480
+    }
+},
+{
+    "model": "util.elemento",
+    "pk": 14,
+    "fields": {
+        "nombre": "Lectura anteriol",
+        "formula": "consumo.lecturaAnterior",
+        "x": 300,
+        "y": 460
+    }
+},
+{
+    "model": "util.elemento",
+    "pk": 15,
+    "fields": {
+        "nombre": "Consumo Metro cubico",
+        "formula": "int(float(consumo.lecturaActual) - float(consumo.lecturaAnterior))",
+        "x": 300,
+        "y": 440
+    }
+},
+{
+    "model": "util.elemento",
+    "pk": 16,
+    "fields": {
+        "nombre": "Total en letras",
+        "formula": "numero_a_letras(float(subsidio.debito)).upper()",
+        "x": 100,
+        "y": 530
+    }
+},
+{
+    "model": "util.elemento",
+    "pk": 17,
+    "fields": {
+        "nombre": "0Usuario",
+        "formula": "subsidio.usuario",
+        "x": 50,
+        "y": 150
+    }
+},
+{
+    "model": "util.elemento",
+    "pk": 18,
+    "fields": {
+        "nombre": "0Numero Factura",
+        "formula": "subsidio.factura",
+        "x": 50,
+        "y": 170
+    }
+},
+{
+    "model": "util.elemento",
+    "pk": 19,
+    "fields": {
+        "nombre": "0Derecho",
+        "formula": "subsidio.nitcte",
+        "x": 450,
+        "y": 170
+    }
+},
+{
+    "model": "util.elemento",
+    "pk": 20,
+    "fields": {
+        "nombre": "0Estrato",
+        "formula": "int(float(subsidio.estrato))",
+        "x": 400,
+        "y": 150
+    }
+},
+{
+    "model": "util.elemento",
+    "pk": 21,
+    "fields": {
+        "nombre": "0Vereda",
+        "formula": "consumo.vereda",
+        "x": 450,
+        "y": 150
+    }
+},
+{
+    "model": "util.elemento",
+    "pk": 22,
+    "fields": {
+        "nombre": "0Total a pagar",
+        "formula": "'{:,}'.format(int(float(subsidio.debito)))",
+        "x": 450,
+        "y": 100
+    }
+},
+{
+    "model": "util.elemento",
+    "pk": 23,
+    "fields": {
+        "nombre": "Movimientos",
+        "formula": null,
+        "x": 100,
+        "y": 600
+    }
+}
 ]
