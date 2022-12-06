@@ -8,7 +8,7 @@ metadata:
   namespace: acueducto-boqueron
 spec:
   rules:
-  - host: laboqueron.agapanto.com.co
+  - host: boqueron.agapanto.com.co
     http:
       paths:
       - path: /
@@ -20,5 +20,5 @@ spec:
               number: 8080
   tls:
   - hosts:
-    - laboqueron.agapanto.com.co
+    - boqueron.agapanto.com.co
     secretName: boqueron-acueducto-com-co
