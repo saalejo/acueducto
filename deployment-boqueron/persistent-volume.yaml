@@ -1,0 +1,17 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: acueducto-boqueron-pv
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  claimRef:
+    namespace: acueducto-boqueron
+    name: acueducto-pvc
+  hostPath:
+    path: "/mnt/acueducto_boqueron_data"
