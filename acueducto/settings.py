@@ -32,7 +32,7 @@ ALLOWED_HOSTS = [
 ]
 CSRF_TRUSTED_ORIGINS = [
     'https://florida.agapanto.com.co'
-    'https://florida.agapanto.com.co'
+    'https://boqueron.agapanto.com.co'
 ]
 
 # Application definition
