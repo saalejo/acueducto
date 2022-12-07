@@ -35,8 +35,8 @@ def importarDocumento(archivo, resource):
 def anoMes(fecha):
     ano = fecha[:4]
     mes = int(fecha[5:7])
-    mesNombre = meses[mes-1]
-    mesAnterior = meses[mes-2]
+    mesNombre = meses[mes-2]
+    mesAnterior = meses[mes-3]
     return ano, mesNombre, mesAnterior
 
 def lecturas(subsidio, consumo):

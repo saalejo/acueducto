@@ -64,7 +64,7 @@
     "pk": 7,
     "fields": {
         "nombre": "Total a pagar",
-        "formula": "'{:,}'.format(int(float(subsidio.debito)))",
+        "formula": "'{:,}'.format(int(float(subsidio.vrpagado)))",
         "x": 50,
         "y": 500
     }
@@ -114,7 +114,7 @@
     "pk": 12,
     "fields": {
         "nombre": "Texto subsidio",
-        "formula": "'Valor Subsidio Ministerio de Vivienda (Covid12)(-)'",
+        "formula": "'Valor Subsidio Ministerio de Vivienda (Covid19)(-)'",
         "x": 120,
         "y": 500
     }
@@ -214,7 +214,7 @@
     "pk": 22,
     "fields": {
         "nombre": "0Total a pagar",
-        "formula": "'{:,}'.format(int(float(subsidio.debito)))",
+        "formula": "'{:,}'.format(int(float(subsidio.vrpagado)))",
         "x": 450,
         "y": 100
     }
