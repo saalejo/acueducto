@@ -23,7 +23,7 @@ meses = [
 ]
 
 meses30 = [11, 4, 6, 8]
-meses31 = [1, 3, 5, 7, 9, 12]
+meses31 = [1, 3, 5, 7, 9, 10, 12]
 
 def importarDocumento(archivo, resource):
     dataset = Dataset()
