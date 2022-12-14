@@ -28,11 +28,15 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'laflorida.agapanto.com.co',
     'boqueron.agapanto.com.co',
+    'aurora.agapanto.com.co',
+    'madera.agapanto.com.co',
     'localhost'
 ]
 CSRF_TRUSTED_ORIGINS = [
     'https://laflorida.agapanto.com.co',
-    'https://boqueron.agapanto.com.co'
+    'https://boqueron.agapanto.com.co',
+    'https://aurora.agapanto.com.co',
+    'https://madera.agapanto.com.co'
 ]
 
 # Application definition
