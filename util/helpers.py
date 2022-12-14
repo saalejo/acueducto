@@ -87,4 +87,4 @@ def generarDocumento(fecha):
         p.showPage()
     p.save()
     buffer.seek(0)
-    return FileResponse(buffer, as_attachment=True, filename='documentos.pdf')
+    return FileResponse(buffer, as_attachment=True, filename=f'{control.empresa}_{fecha}.pdf')
