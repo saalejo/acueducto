@@ -4,6 +4,7 @@ ENV PYTHONUNBUFFERED 1
 RUN mkdir /acueducto
 WORKDIR /acueducto
 COPY . /acueducto/
+COPY ./acueducto/settings-prod.py /acueducto/acueducto/settings.py
 RUN apt-get update
 RUN pip install --upgrade pip
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
