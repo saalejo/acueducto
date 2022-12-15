@@ -6,3 +6,4 @@ delete from util_movimiento;
 
 -- PostgreSQL
 TRUNCATE util_control, util_subsidio, util_consumo, util_movimiento;
+TRUNCATE util_subsidio, util_consumo, util_movimiento;
