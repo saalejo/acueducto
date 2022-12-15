@@ -1,1 +1,4 @@
 /acueducto/settings.py
+/acueducto/settings-prod.py
+db.sqlite3
+venv

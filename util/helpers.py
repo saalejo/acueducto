@@ -79,11 +79,18 @@ def generarDocumento(fecha):
         movimientos = Movimiento.objects.filter(numcom=subsidio.factura)
         elemento = elementos.get(nombre=movimientosNombre)
         avance = 0
-        for movimiento in movimientos:
-            if float(movimiento.debito) == 0 and float(movimiento.credito) > 0:
-                p.drawString(elemento.x, elemento.y + avance, '{:,}'.format(int(float(movimiento.credito))))
-                p.drawString(elemento.x + 50, elemento.y + avance, movimiento.desmvt)
-                avance += 20
+        if control.empresa == 'La madera':
+            for movimiento in movimientos:
+                if float(movimiento.debito) == 0 and float(movimiento.credito) > 0:
+                    p.drawString(elemento.x + 300, elemento.y + avance, '{:,}'.format(int(float(movimiento.credito))))
+                    p.drawString(elemento.x, elemento.y + avance, movimiento.desmvt)
+                    avance += 20   
+        else: 
+            for movimiento in movimientos:
+                if float(movimiento.debito) == 0 and float(movimiento.credito) > 0:
+                    p.drawString(elemento.x, elemento.y + avance, '{:,}'.format(int(float(movimiento.credito))))
+                    p.drawString(elemento.x + 50, elemento.y + avance, movimiento.desmvt)
+                    avance += 20
         p.showPage()
     p.save()
     buffer.seek(0)
