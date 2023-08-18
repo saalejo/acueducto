@@ -20,9 +20,49 @@ class Control(models.Model):
         verbose_name_plural = "controles"
         # unique_together = ('empresa', 'codemp', 'nit')
 
-class Consumo(models.Model):
-    vereda = models.CharField(max_length=255, null=True, blank=True, default=None)
+class Cliente(models.Model):
+    nomcte = models.CharField(max_length=255, null=True, blank=True, default=None)
     codcte = models.CharField(max_length=255, null=True, blank=True, default=None)
+    nitcte = models.CharField(max_length=255, null=True, blank=True, default=None)
+    codvie = models.CharField(max_length=255, null=True, blank=True, default=None)
+    correo = models.CharField(max_length=255, null=True, blank=True, default=None)
+    ciucte = models.CharField(max_length=255, null=True, blank=True, default=None)
+    telcte = models.CharField(max_length=255, null=True, blank=True, default=None)
+    estrato = models.CharField(max_length=255, null=True, blank=True, default=None)
+    uso = models.CharField(max_length=255, null=True, blank=True, default=None)
+    dercon = models.CharField(max_length=255, null=True, blank=True, default=None)
+    alcant = models.CharField(max_length=255, null=True, blank=True, default=None)
+    aseo = models.CharField(max_length=255, null=True, blank=True, default=None)
+    basico = models.CharField(max_length=255, null=True, blank=True, default=None)
+    complement = models.CharField(max_length=255, null=True, blank=True, default=None)
+    suntuario = models.CharField(max_length=255, null=True, blank=True, default=None)
+    consumo1 = models.CharField(max_length=255, null=True, blank=True, default=None)
+    consumo2 = models.CharField(max_length=255, null=True, blank=True, default=None)
+    consumo3 = models.CharField(max_length=255, null=True, blank=True, default=None)
+    consumo4 = models.CharField(max_length=255, null=True, blank=True, default=None)
+    consumo5 = models.CharField(max_length=255, null=True, blank=True, default=None)
+    consumo6 = models.CharField(max_length=255, null=True, blank=True, default=None)
+    consumo7 = models.CharField(max_length=255, null=True, blank=True, default=None)
+    consumo8 = models.CharField(max_length=255, null=True, blank=True, default=None)
+    ficha = models.CharField(max_length=255, null=True, blank=True, default=None)
+    predio = models.CharField(max_length=255, null=True, blank=True, default=None)
+    medidor = models.CharField(max_length=255, null=True, blank=True, default=None)
+    subsidio = models.CharField(max_length=255, null=True, blank=True, default=None)
+    indsubsi = models.CharField(max_length=255, null=True, blank=True, default=None)
+    
+    def __str__(self):
+        return self.codcte
+
+class Consumo(models.Model):
+    cliente = models.ForeignKey(
+        Cliente,
+        on_delete=models.CASCADE,
+        related_name='cliente',
+        db_column='codcte'
+    )
+    vereda = models.CharField(max_length=255, null=True, blank=True, default=None)
+    sector = models.CharField(max_length=255, null=True, blank=True, default=None)
+    ruta = models.IntegerField(default=0)
     lecact = models.CharField(max_length=255, null=True, blank=True, default=None)
     feccon = models.CharField(max_length=255, null=True, blank=True, default=None)
     lecant = models.CharField(max_length=255, null=True, blank=True, default=None)
@@ -54,9 +94,6 @@ class Consumo(models.Model):
     
     def __str__(self):
         return self.codcte
-    
-    # class Meta:
-    #     unique_together = ('codcte', 'feccon')
 
 class Movimiento(models.Model):
     codage = models.CharField(max_length=255, null=True, blank=True, default=None)
@@ -75,8 +112,7 @@ class Movimiento(models.Model):
         return self.nitcte
     
     class Meta:
-    #     unique_together = ('nitcte', 'desmvt', 'fecha')
-        ordering = ['nitcte', '-codcon']
+        ordering = ['-codcon']
 
 class Subsidio(models.Model):
     factura = models.CharField(max_length=255, null=True, blank=True, default=None)
@@ -107,3 +143,21 @@ class Elemento(models.Model):
     
     class Meta:
         ordering = ['nombre']
+        
+class Lectura(models.Model):
+    codigo = models.CharField(max_length=16, null=True, blank=True, default=None)
+    cliente = models.ForeignKey(
+        Cliente,
+        on_delete=models.CASCADE,
+        db_column='codcte'
+    )
+    vereda = models.CharField(max_length=255, null=True, blank=True, default=None)
+    sector = models.CharField(max_length=255, null=True, blank=True, default=None)
+    ruta = models.IntegerField(default=0)
+    lecturaAnterior = models.CharField(max_length=255, null=True, blank=True, default=None)
+    lectura = models.CharField(max_length=255, null=True, blank=True, default=None)
+    fecha = models.DateTimeField(auto_now_add=True)
+    fecha_ruta = models.DateField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.cliente.nomcte

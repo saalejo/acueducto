@@ -1,5 +1,5 @@
 from import_export import resources
-from .models import Consumo, Control, Movimiento, Subsidio
+from .models import Consumo, Control, Movimiento, Subsidio, Cliente
 
 class ControlResource(resources.ModelResource):
     class Meta:
@@ -16,3 +16,6 @@ class MovimientoResource(resources.ModelResource):
 class SubsidioResource(resources.ModelResource):
     class Meta:
         model = Subsidio
+class ClienteResource(resources.ModelResource):
+    class Meta:
+        model = Cliente
