@@ -1,8 +1,43 @@
 from rest_framework import serializers
 
-from util.models import Lectura
+from util.models import *
 
+class ClienteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cliente
+        fields = ['codcte', 'nomcte', 'telcte', 'estrato']
+        
+class ConsumoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Consumo
+        fields = [
+            'lecant',
+            'sector',
+            'feccon',
+            'ruta',
+            'conenero',
+            'confebrero',
+            'conmarzo',
+            'conabril',
+            'conmayo',
+            'conjunio',
+            'conjulio',
+            'conagosto',
+            'conseptiembre',
+            'conoctubre',
+            'connoviembre',
+            'condiciembre',
+        ]
+        
 class LecturaSerializer(serializers.ModelSerializer):
+    consumo = ConsumoSerializer()
+    cliente = ClienteSerializer()
     class Meta:
         model = Lectura
-        fields = ['codigo', 'cliente', 'vereda', 'sector', 'ruta', 'lecturaAnterior', 'lectura', 'fecha_ruta']
+        exclude = ['fecha']
+        
+class RutaSerializer(serializers.ModelSerializer):
+    lecturas = LecturaSerializer(many=True, read_only=True)
+    class Meta:
+        model = Ruta
+        fields = '__all__'

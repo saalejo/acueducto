@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from util.helpers import generarDocumento, importarDocumento
+from django.http import JsonResponse
+from util.helpers import crearRuta, generarDocumento, importarDocumento
 from util.resources import ConsumoResource, ControlResource, MovimientoResource, SubsidioResource, ClienteResource
 
 documentos = [
@@ -26,3 +27,8 @@ def inicio(request):
 
 def exportar(request, fecha=None):
     return generarDocumento(fecha)
+
+def generarRuta(request, vereda):
+    element = crearRuta(vereda)
+    return JsonResponse(element)
+    

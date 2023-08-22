@@ -54,15 +54,10 @@ class Cliente(models.Model):
         return self.codcte
 
 class Consumo(models.Model):
-    cliente = models.ForeignKey(
-        Cliente,
-        on_delete=models.CASCADE,
-        related_name='cliente',
-        db_column='codcte'
-    )
+    codcte = models.CharField(max_length=255, null=True, blank=True, default=None)
     vereda = models.CharField(max_length=255, null=True, blank=True, default=None)
     sector = models.CharField(max_length=255, null=True, blank=True, default=None)
-    ruta = models.IntegerField(default=0)
+    ruta = models.CharField(max_length=255, null=True, blank=True, default=None)
     lecact = models.CharField(max_length=255, null=True, blank=True, default=None)
     feccon = models.CharField(max_length=255, null=True, blank=True, default=None)
     lecant = models.CharField(max_length=255, null=True, blank=True, default=None)
@@ -94,6 +89,10 @@ class Consumo(models.Model):
     
     def __str__(self):
         return self.codcte
+    
+    @property
+    def cliente(self):
+        return Cliente.objects.filter(codcte=self.codcte).first
 
 class Movimiento(models.Model):
     codage = models.CharField(max_length=255, null=True, blank=True, default=None)
@@ -144,20 +143,28 @@ class Elemento(models.Model):
     class Meta:
         ordering = ['nombre']
         
-class Lectura(models.Model):
+class Ruta(models.Model):
     codigo = models.CharField(max_length=16, null=True, blank=True, default=None)
-    cliente = models.ForeignKey(
-        Cliente,
-        on_delete=models.CASCADE,
-        db_column='codcte'
-    )
     vereda = models.CharField(max_length=255, null=True, blank=True, default=None)
-    sector = models.CharField(max_length=255, null=True, blank=True, default=None)
-    ruta = models.IntegerField(default=0)
-    lecturaAnterior = models.CharField(max_length=255, null=True, blank=True, default=None)
-    lectura = models.CharField(max_length=255, null=True, blank=True, default=None)
-    fecha = models.DateTimeField(auto_now_add=True)
-    fecha_ruta = models.DateField(auto_now_add=True)
+    fecha = models.DateField(auto_now_add=True)
     
     def __str__(self):
-        return self.cliente.nomcte
+        return self.codigo
+    
+    @property
+    def lecturas(self):
+        return Lectura.objects.filter(ruta_id=self.id).all
+
+class Lectura(models.Model):
+    ruta = models.ForeignKey(Ruta, on_delete=models.CASCADE)
+    consumo = models.ForeignKey(Consumo, on_delete=models.CASCADE)
+    lectura = models.FloatField(default=0)
+    fecha = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.ruta.codigo
+    
+    @property
+    def cliente(self):
+        return Cliente.objects.filter(codcte=self.consumo.codcte).first
+
