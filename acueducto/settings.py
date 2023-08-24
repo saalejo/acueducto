@@ -26,18 +26,8 @@ SECRET_KEY = 'django-insecure-gzqq2ulxz$8v2ty2+(#3owj%9eucrn8qu2gg8dnq0ml_h%%35m
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'acueducto.pythonanywhere.com',
-    'laflorida.agapanto.com.co',
-    'boqueron.agapanto.com.co',
-    'localhost'
+    '*'
 ]
-CSRF_TRUSTED_ORIGINS = [
-    'https://acueducto.pythonanywhere.com',
-    'https://laflorida.agapanto.com.co',
-    'https://boqueron.agapanto.com.co',
-    'http://localhost',
-]
-
 CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition

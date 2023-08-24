@@ -3,9 +3,7 @@ import reportlab
 import io
 from django.http import FileResponse
 from reportlab.pdfgen import canvas
-import secrets
-import random
-from util.models import Consumo, Control, Elemento, Lectura, Movimiento, Ruta, Subsidio
+from util.models import Consumo, Control, Dispositivo, Elemento, Lectura, Movimiento, Ruta, Subsidio
 from .numero_letras import *
 
 meses = [
@@ -105,15 +103,11 @@ def generarDocumento(fecha):
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename=f'{control.empresa}_{fecha}.pdf')
 
-def crearRuta(vereda):
-    consumos = Consumo.objects.filter(vereda=vereda).all()
-    token = secrets.token_hex(nbytes=16)
-    ruta = Ruta(codigo=token, vereda=vereda)
-    ruta.save()
+def crearRuta(ruta):
+    consumos = Consumo.objects.filter(vereda=ruta.vereda).all()
     for consumo in consumos:
         lectura = Lectura(
             ruta_id=ruta.id,
             consumo_id = consumo.id
         )
         lectura.save()
-    return { 'codigo': ruta.codigo }

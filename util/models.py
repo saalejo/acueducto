@@ -143,13 +143,27 @@ class Elemento(models.Model):
     class Meta:
         ordering = ['nombre']
         
+class Dispositivo(models.Model):
+    codigo = models.CharField(max_length=32, null=True, blank=True, default=None)
+    nombre = models.CharField(max_length=255)
+    
+    def __str__(self):
+        return self.nombre
+
+
 class Ruta(models.Model):
-    codigo = models.CharField(max_length=16, null=True, blank=True, default=None)
-    vereda = models.CharField(max_length=255, null=True, blank=True, default=None)
+    SHIRT_SIZES = [
+        ("Activa", "Activa"),
+        ("Terminada", "Terminada"),
+        ("Bloqueada", "Bloqueada"),
+    ]
+    dispositivo = models.ForeignKey(Dispositivo, on_delete=models.CASCADE)
+    estado = models.CharField(max_length=16, choices=SHIRT_SIZES)
+    vereda = models.CharField(max_length=255)
     fecha = models.DateField(auto_now_add=True)
     
     def __str__(self):
-        return self.codigo
+        return self.vereda
     
     @property
     def lecturas(self):
@@ -162,7 +176,7 @@ class Lectura(models.Model):
     fecha = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return self.ruta.codigo
+        return f"{self.ruta.vereda} - {self.consumo.codcte} -  {self.lectura}"
     
     @property
     def cliente(self):

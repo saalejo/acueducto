@@ -41,3 +41,8 @@ class RutaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ruta
         fields = '__all__'
+
+class RutaSimpleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ruta
+        fields = ['id', 'vereda', 'estado', 'fecha']
