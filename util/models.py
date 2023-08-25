@@ -172,8 +172,11 @@ class Ruta(models.Model):
 class Lectura(models.Model):
     ruta = models.ForeignKey(Ruta, on_delete=models.CASCADE)
     consumo = models.ForeignKey(Consumo, on_delete=models.CASCADE)
-    lectura = models.FloatField(default=0)
+    lectura = models.FloatField(null=True, blank=True, default=None)
     fecha = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['consumo__ruta']
     
     def __str__(self):
         return f"{self.ruta.vereda} - {self.consumo.codcte} -  {self.lectura}"
