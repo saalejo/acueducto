@@ -12,8 +12,8 @@ router.register(r'lecturas', LecturaViewSet)
 router.register(r'rutas', RutaViewSet)
 
 urlpatterns =[
+    path('', inicio, name='inicio'),
     path('', include(router.urls)),
-    path('upload', inicio, name='inicio'),
     path('generar_ruta/', GenerarRutaView.as_view(), name='generar_ruta'),
     path('guardar_ruta/', GuardarRutaView.as_view(), name='generar_ruta'),
     path('ruta_simple/', RutaList.as_view(), name='ruta_simple'),
