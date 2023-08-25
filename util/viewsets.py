@@ -14,7 +14,6 @@ class LecturaViewSet(viewsets.ModelViewSet):
 class RutaViewSet(viewsets.ModelViewSet):
     queryset = Ruta.objects.all()
     serializer_class = RutaSerializer
-    filterset_fields = ['codigo']
 
 class GuardarRutaView(APIView):
     parser_classes = [JSONParser]
@@ -25,6 +24,10 @@ class GuardarRutaView(APIView):
             lectura = Lectura.objects.get(pk=l['id'])
             lectura.lectura = l['lectura']
             lectura.save()
+        if request_json['terminar']:
+            Ruta.objects.filter(id=request_json['ruta_id']).update(
+                estado='Terminada'
+            )
         response = {'ruta_id': request_json['ruta_id'] }
         return JsonResponse(data=response, status=200)
 
@@ -44,5 +47,6 @@ from rest_framework import generics
 from rest_framework.permissions import IsAdminUser
 
 class RutaList(generics.ListCreateAPIView):
-    queryset = Ruta.objects.all()
+    queryset = Ruta.objects.filter(estado='Activa').all()
     serializer_class = RutaSimpleSerializer
+    filterset_fields = ['dispositivo__codigo']
