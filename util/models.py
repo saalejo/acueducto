@@ -54,13 +54,16 @@ class Cliente(models.Model):
         return self.codcte
 
 class Consumo(models.Model):
-    codcte = models.CharField(max_length=255, null=True, blank=True, default=None)
+    ultimoMes = models.IntegerField(default=0)
+    codacu = models.CharField(max_length=255, null=True, blank=True, default=None)
     vereda = models.CharField(max_length=255, null=True, blank=True, default=None)
     sector = models.CharField(max_length=255, null=True, blank=True, default=None)
     ruta = models.IntegerField(null=True, blank=True, default=None)
+    codcte = models.CharField(max_length=255, null=True, blank=True, default=None)
     lecact = models.CharField(max_length=255, null=True, blank=True, default=None)
     feccon = models.CharField(max_length=255, null=True, blank=True, default=None)
     lecant = models.CharField(max_length=255, null=True, blank=True, default=None)
+    consumo = models.CharField(max_length=255, null=True, blank=True, default=None)
     indliq = models.CharField(max_length=255, null=True, blank=True, default=None)
     enero = models.CharField(max_length=255, null=True, blank=True, default=None)
     conenero = models.CharField(max_length=255, null=True, blank=True, default=None)
@@ -79,13 +82,13 @@ class Consumo(models.Model):
     agosto = models.CharField(max_length=255, null=True, blank=True, default=None)
     conagosto = models.CharField(max_length=255, null=True, blank=True, default=None)
     septiembre = models.CharField(max_length=255, null=True, blank=True, default=None)
-    conseptiembre = models.CharField(max_length=255, null=True, blank=True, default=None)
+    conseptiem = models.CharField(max_length=255, null=True, blank=True, default=None)
     octubre = models.CharField(max_length=255, null=True, blank=True, default=None)
     conoctubre = models.CharField(max_length=255, null=True, blank=True, default=None)
     noviembre = models.CharField(max_length=255, null=True, blank=True, default=None)
-    connoviembre = models.CharField(max_length=255, null=True, blank=True, default=None)
+    connoviemb = models.CharField(max_length=255, null=True, blank=True, default=None)
     diciembre = models.CharField(max_length=255, null=True, blank=True, default=None)
-    condiciembre = models.CharField(max_length=255, null=True, blank=True, default=None)
+    condiciemb = models.CharField(max_length=255, null=True, blank=True, default=None)
     
     def __str__(self):
         return self.codcte
@@ -163,7 +166,7 @@ class Ruta(models.Model):
     fecha = models.DateField(auto_now_add=True)
     
     def __str__(self):
-        return self.vereda
+        return f"{self.vereda} | {self.dispositivo.nombre}"
     
     @property
     def lecturas(self):

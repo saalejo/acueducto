@@ -23,10 +23,10 @@ class ConsumoSerializer(serializers.ModelSerializer):
             'conjunio',
             'conjulio',
             'conagosto',
-            'conseptiembre',
+            'conseptiem',
             'conoctubre',
-            'connoviembre',
-            'condiciembre',
+            'connoviemb',
+            'condiciemb',
         ]
         
 class LecturaSerializer(serializers.ModelSerializer):

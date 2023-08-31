@@ -6,6 +6,7 @@ from rest_framework import viewsets
 from util.helpers import crearRuta
 from util.models import Lectura
 from util.serializers import *
+from util.helpers import meses
 
 class LecturaViewSet(viewsets.ModelViewSet):
     queryset = Lectura.objects.all()
@@ -20,10 +21,24 @@ class GuardarRutaView(APIView):
     
     def post(self, request, *args, **kwargs):
         request_json = request.data
+        ruta = Ruta.objects.get(id=request_json['ruta_id'])
+        mes = meses[ruta.fecha.month]
         for l in request_json['lecturas']:
-            lectura = Lectura.objects.get(pk=l['id'])
-            lectura.lectura = l['lectura']
-            lectura.save()
+            if l['lectura']:
+                lectura = Lectura.objects.get(pk=l['id'])
+                lectura.lectura = l['lectura']
+                lectura.save()
+                # Update consumo
+                consumo = lectura.consumo
+                if consumo.ultimoMes != ruta.fecha.month:
+                    consumo.lecant = consumo.lecact
+                consumo.lecact = lectura.lectura
+                totalConsumo = float(consumo.lecact) - float(consumo.lecant)
+                consumo.consumo = totalConsumo
+                consumo.ultimoMes = ruta.fecha.month
+                setattr(consumo, mes, lectura.lectura)
+                setattr(consumo, f"con{mes[0:7]}", totalConsumo)
+                consumo.save()
         if request_json['terminar']:
             Ruta.objects.filter(id=request_json['ruta_id']).update(
                 estado='Terminada'

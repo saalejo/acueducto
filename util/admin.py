@@ -6,9 +6,11 @@ from import_export.admin import ImportExportModelAdmin
 
 class ConsumoAdmin(ImportExportModelAdmin):
     resource_classes = [ConsumoResource]
+    list_per_page = 1000
 
 class ClienteAdmin(ImportExportModelAdmin):
     resource_classes = [ClienteResource]
+    list_per_page = 1000
 
 admin.site.site_header = 'Acueducto'
 admin.site.register(Control)
