@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from util.helpers import generarDocumento, importarDocumento
 from util.resources import ConsumoResource, ControlResource, MovimientoResource, SubsidioResource, ClienteResource
+from django.shortcuts import redirect
 
 documentos = [
     ('control', ControlResource()),
@@ -10,7 +11,10 @@ documentos = [
     ('cliente', ClienteResource()),
 ]
 
-def inicio(request):   
+def inicio(request):
+    return redirect("/static/spa/")
+
+def upload(request):   
     errores = []
     if request.method == 'POST':
         for clave, valor in documentos:

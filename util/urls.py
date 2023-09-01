@@ -1,7 +1,7 @@
 from django.urls import path
 
 from util.viewsets import *
-from .views import exportar, inicio
+from .views import exportar, inicio, upload
 from django.urls import path, include
 from rest_framework import routers
 
@@ -13,6 +13,7 @@ router.register(r'rutas', RutaViewSet)
 
 urlpatterns =[
     path('', inicio, name='inicio'),
+    path('upload', upload, name='upload'),
     path('', include(router.urls)),
     path('generar_ruta/', GenerarRutaView.as_view(), name='generar_ruta'),
     path('guardar_ruta/', GuardarRutaView.as_view(), name='generar_ruta'),
