@@ -12,7 +12,7 @@ documentos = [
 ]
 
 def inicio(request):
-    return redirect("/static/spa/")
+    return redirect("/static/spa/index.html")
 
 def upload(request):   
     errores = []
