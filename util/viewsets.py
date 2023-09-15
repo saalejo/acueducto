@@ -3,10 +3,11 @@ from django.http import JsonResponse
 from rest_framework.parsers import JSONParser
 from rest_framework.views import APIView
 from rest_framework import viewsets
-from util.helpers import crearRuta
+from util.helpers import add_months, crearRuta
 from util.models import Lectura
 from util.serializers import *
 from util.helpers import meses
+import calendar
 
 class LecturaViewSet(viewsets.ModelViewSet):
     queryset = Lectura.objects.all()
@@ -31,13 +32,14 @@ class GuardarRutaView(APIView):
                 # Update consumo
                 consumo = lectura.consumo
                 if consumo.ultimoMes != ruta.fecha.month:
+                    consumo.feccon = add_months(consumo.feccon, 1)
                     consumo.lecant = consumo.lecact
                 consumo.lecact = lectura.lectura
                 totalConsumo = float(consumo.lecact) - float(consumo.lecant)
                 consumo.consumo = totalConsumo
                 consumo.ultimoMes = ruta.fecha.month
-                setattr(consumo, mes, lectura.lectura)
-                setattr(consumo, f"con{mes[0:7]}", totalConsumo)
+                # setattr(consumo, mes, lectura.lectura)
+                # setattr(consumo, f"con{mes[0:7]}", totalConsumo)
                 consumo.save()
         if request_json['terminar']:
             Ruta.objects.filter(id=request_json['ruta_id']).update(

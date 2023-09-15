@@ -12,6 +12,7 @@ class ConsumoSerializer(serializers.ModelSerializer):
         model = Consumo
         fields = [
             'lecant',
+            'lecact',
             'sector',
             'feccon',
             'ruta',

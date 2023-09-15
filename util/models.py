@@ -96,6 +96,9 @@ class Consumo(models.Model):
     @property
     def cliente(self):
         return Cliente.objects.filter(codcte=self.codcte).first
+    
+    class Meta:
+        ordering = ['codcte']
 
 class Movimiento(models.Model):
     codage = models.CharField(max_length=255, null=True, blank=True, default=None)
