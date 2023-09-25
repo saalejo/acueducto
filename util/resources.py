@@ -1,4 +1,7 @@
+from datetime import datetime
 from import_export import resources
+from import_export.fields import Field
+from import_export.widgets import DateWidget
 from .models import Consumo, Control, Movimiento, Subsidio, Cliente
 
 class ControlResource(resources.ModelResource):
@@ -6,12 +9,19 @@ class ControlResource(resources.ModelResource):
         model = Control
 
 class ConsumoResource(resources.ModelResource):
+    codacu = Field(attribute='codacu')
+    vereda = Field(attribute='vereda')
+    sector = Field(attribute='sector')
+    ruta = Field(attribute='ruta')
+    codcte = Field(attribute='codcte')
+    lecact = Field(attribute='lecact')
+    feccon = Field(attribute='feccon', widget=DateWidget(format='%d/%m/%Y'))
+    
     class Meta:
         model = Consumo
         import_id_fields = ['codcte']
         fields = [
-            'codacu', 'vereda', 'sector', 'ruta', 'codcte',
-            'lecact', 'feccon', 'lecant', 'consumo', 'indliq',
+            'lecant', 'consumo', 'indliq',
             'enero', 'conenero',
             'febrero', 'confebrero',
             'marzo', 'conmarzo',
