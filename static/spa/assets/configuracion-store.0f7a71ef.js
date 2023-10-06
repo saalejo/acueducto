@@ -1,0 +1,1 @@
+import{j as t}from"./index.2ee7214d.js";const e=t("configuracion",{state:()=>({api_uri:"",token:""}),getters:{obtener:i=>i},actions:{modificar(i){this.api_uri=i.api_uri,this.token=i.token}},persist:!0});export{e as u};
