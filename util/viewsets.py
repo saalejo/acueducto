@@ -32,6 +32,7 @@ class GuardarRutaView(APIView):
                 # Update consumo
                 consumo = lectura.consumo
                 if consumo.ultimoMes != ruta.fecha.month:
+                    breakpoint()
                     consumo.feccon = add_months(consumo.feccon, 1)
                     consumo.lecant = consumo.lecact
                 consumo.lecact = lectura.lectura

@@ -115,9 +115,9 @@ def crearRuta(ruta):
         lectura.save()
 
 def add_months(sourcedate, months):
-    sourcedate = datetime.datetime.strptime(sourcedate, "%Y-%m-%d").date()
+    sourcedate = datetime.datetime.strptime(sourcedate, "%d/%m/%Y").date()
     month = sourcedate.month - 1 + months
     year = sourcedate.year + month // 12
     month = month % 12 + 1
     day = min(sourcedate.day, calendar.monthrange(year,month)[1])
-    return datetime.date(year, month, day)
+    return datetime.date(year, month, day).strftime("%d/%m/%Y")

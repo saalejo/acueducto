@@ -21,5 +21,5 @@ def after_save_ruta(sender, instance, created, **kwargs):
 @receiver(post_save, sender=Consumo)
 def after_save_consumo(sender, instance, **kwargs):
     if isinstance(instance.feccon, float):
-        date = xlrd.xldate_as_datetime(instance.feccon, 0)
-        Consumo.objects.filter(pk=instance.pk).update(feccon=date.date())
+        date = xlrd.xldate_as_datetime(instance.feccon, 0).date()
+        Consumo.objects.filter(pk=instance.pk).update(feccon=date.strftime("%d/%m/%Y"))

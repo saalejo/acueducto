@@ -61,7 +61,7 @@ class Consumo(models.Model):
     ruta = models.FloatField(null=True, blank=True, default=None)
     codcte = models.CharField(max_length=255, null=True, blank=True, default=None)
     lecact = models.CharField(max_length=255, null=True, blank=True, default=None)
-    feccon = models.DateField(max_length=255, null=True, blank=True, default=None)
+    feccon = models.CharField(max_length=255, null=True, blank=True, default=None)
     lecant = models.CharField(max_length=255, null=True, blank=True, default=None)
     consumo = models.CharField(max_length=255, null=True, blank=True, default=None)
     indliq = models.CharField(max_length=255, null=True, blank=True, default=None)
