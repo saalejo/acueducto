@@ -42,7 +42,7 @@ class ConsumoResource(resources.ModelResource):
     agosto = Field(attribute='agosto', widget=MyFloat())
     conagosto = Field(attribute='conagosto', widget=MyFloat())
     septiembre = Field(attribute='septiembre', widget=MyFloat())
-    conseptiemb = Field(attribute='conseptiem', widget=MyFloat())
+    conseptiem = Field(attribute='conseptiem', widget=MyFloat())
     octubre = Field(attribute='octubre', widget=MyFloat())
     conoctubre = Field(attribute='conoctubre', widget=MyFloat())
     noviembre = Field(attribute='noviembre', widget=MyFloat())
