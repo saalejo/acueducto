@@ -42,7 +42,7 @@ class ConsumoResource(resources.ModelResource):
     agosto = Field(attribute='agosto', widget=MyFloat())
     conagosto = Field(attribute='conagosto', widget=MyFloat())
     septiembre = Field(attribute='septiembre', widget=MyFloat())
-    conseptiembre = Field(attribute='conseptiem', widget=MyFloat())
+    conseptiemb = Field(attribute='conseptiem', widget=MyFloat())
     octubre = Field(attribute='octubre', widget=MyFloat())
     conoctubre = Field(attribute='conoctubre', widget=MyFloat())
     noviembre = Field(attribute='noviembre', widget=MyFloat())
@@ -53,6 +53,7 @@ class ConsumoResource(resources.ModelResource):
     class Meta:
         model = Consumo
         import_id_fields = ['codcte']
+        exclude = ['id', 'ultimoMes',]
 
 class MovimientoResource(resources.ModelResource):
     class Meta:
