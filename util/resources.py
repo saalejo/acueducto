@@ -25,6 +25,7 @@ class ConsumoResource(resources.ModelResource):
     lecant = Field(attribute='lecant', widget=MyFloat())
     consumo = Field(attribute='consumo', widget=MyFloat())
     indliq = Field(attribute='indliq')
+    observacion = Field(attribute='observacion')
     enero = Field(attribute='enero', widget=MyFloat())
     conenero = Field(attribute='conenero', widget=MyFloat())
     febrero = Field(attribute='febrero', widget=MyFloat())

@@ -55,6 +55,7 @@ class Cliente(models.Model):
 
 class Consumo(models.Model):
     ultimoMes = models.IntegerField(default=0)
+    observacion = models.CharField(max_length=255, null=True, blank=True, default=None)
     codacu = models.CharField(max_length=255, null=True, blank=True, default=None)
     vereda = models.CharField(max_length=255, null=True, blank=True, default=None)
     sector = models.CharField(max_length=255, null=True, blank=True, default=None)
@@ -179,6 +180,7 @@ class Lectura(models.Model):
     ruta = models.ForeignKey(Ruta, on_delete=models.CASCADE)
     consumo = models.ForeignKey(Consumo, on_delete=models.CASCADE)
     lectura = models.FloatField(null=True, blank=True, default=None)
+    lectura_anterior = models.FloatField(null=True, blank=True, default=None)
     fecha = models.DateTimeField(auto_now_add=True)
     
     class Meta:

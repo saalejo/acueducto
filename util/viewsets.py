@@ -28,6 +28,7 @@ class GuardarRutaView(APIView):
             if l['lectura']:
                 lectura = Lectura.objects.get(pk=l['id'])
                 lectura.lectura = l['lectura']
+                lectura.lectura_anterior = l['lectura_anterior']
                 lectura.save()
                 # Update consumo
                 consumo = lectura.consumo
@@ -35,6 +36,8 @@ class GuardarRutaView(APIView):
                     consumo.feccon = add_months(consumo.feccon, 1)
                     consumo.lecant = consumo.lecact
                 consumo.lecact = lectura.lectura
+                consumo.lecant = lectura.lectura_anterior
+                consumo.observacion = l['observacion']
                 totalConsumo = float(consumo.lecact) - float(consumo.lecant)
                 consumo.consumo = totalConsumo
                 consumo.ultimoMes = ruta.fecha.month
