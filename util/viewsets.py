@@ -37,7 +37,7 @@ class GuardarRutaView(APIView):
                     consumo.lecant = consumo.lecact
                 consumo.lecact = lectura.lectura
                 consumo.lecant = lectura.lectura_anterior
-                consumo.observacion = l['observacion']
+                consumo.observacion = l['observacion'] if 'observacion' in l else ""
                 totalConsumo = float(consumo.lecact) - float(consumo.lecant)
                 consumo.consumo = totalConsumo
                 consumo.ultimoMes = ruta.fecha.month
