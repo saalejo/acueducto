@@ -1,5 +1,6 @@
 import calendar
 import datetime
+from facturacion_electronica.models import Factura
 from tablib import Dataset
 import reportlab
 import io
@@ -7,6 +8,7 @@ from django.http import FileResponse
 from reportlab.pdfgen import canvas
 from util.models import Consumo, Control, Dispositivo, Elemento, Lectura, Movimiento, Ruta, Subsidio
 from .numero_letras import *
+
 
 meses = [
     'enero',
@@ -30,10 +32,12 @@ def importarDocumento(archivo, resource):
     dataset = Dataset()
     dataset.load(archivo.read())
     result = resource.import_data(dataset, dry_run=False)
+    print(result)
     if not result.has_errors():
         resource.import_data(dataset, dry_run=False)
     else:
         print(result)
+
 
 def anoMes(fecha):
     ano = fecha[:4]
@@ -42,13 +46,13 @@ def anoMes(fecha):
     mesAnterior = meses[mes-3]
     return ano, mesNombre, mesAnterior
 
-def lecturas(subsidio, consumo):
+def lecturas(subsidio, consumo, comparar_fechas=True):
     if consumo is not None:
         consumo.lecturaActual = 0
         consumo.lecturaAnterior = 0
         anoSubsidio, mesSubsidio, mesAnteriorSubsidio = anoMes(subsidio.fecmvt)
         anoConsumo, mesConsumo, mesAnteriorConsumo = anoMes(consumo.feccon)
-        if anoSubsidio == anoConsumo and subsidio.fecmvt <= consumo.feccon:        
+        if not comparar_fechas or (anoSubsidio == anoConsumo and subsidio.fecmvt <= consumo.feccon):        
             lecturaActual = getattr(consumo, mesSubsidio)
             lecturaAnterior = getattr(consumo, mesAnteriorSubsidio)
             consumo.lecturaActual = int(float(lecturaActual))

@@ -12,6 +12,10 @@ class ClienteAdmin(ImportExportModelAdmin):
     resource_classes = [ClienteResource]
     list_per_page = 1000
 
+class MovimientoAdmin(ImportExportModelAdmin):
+    resource_classes = [MovimientoResource]
+    list_per_page = 1000
+
 admin.site.site_header = 'Acueducto'
 admin.site.register(Control)
 admin.site.register(Consumo, ConsumoAdmin)
@@ -19,6 +23,6 @@ admin.site.register(Cliente, ClienteAdmin)
 admin.site.register(Dispositivo)
 admin.site.register(Elemento)
 admin.site.register(Lectura)
-admin.site.register(Movimiento)
+admin.site.register(Movimiento, MovimientoAdmin)
 admin.site.register(Ruta)
 admin.site.register(Subsidio)

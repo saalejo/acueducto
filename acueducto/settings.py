@@ -34,6 +34,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 INSTALLED_APPS = [
     'util.apps.UtilConfig',
+    'facturacion_electronica.apps.FacturacionElectronicaConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -132,3 +133,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
+
+EMAIL_USE_TLS = True
+
+EMAIL_HOST = 'live.smtp.mailtrap.io'
+EMAIL_HOST_USER = 'api'
+EMAIL_HOST_PASSWORD = '66b63ece2dce41fd3dd8f0eb0683653d'
+EMAIL_PORT = 587
+
+EMAIL_SUBJECT = "811008921;ASOCIACION DE SOCIOS DEL ACUEDUCTO Y ALCANTARILLADO SONADORA GARZONAS MUNICIPIO DE EL CARMEN DE VIBORAL DEPARTAMENTO DE ANTIOQUIA;{};01"
+EMAIL_FROM = "acueducto.alcantarillado.sonadora.garzonas@agapanto.com.co"
+EMAIL_CC = "bermudezdiegoalejandro@gmail.com"

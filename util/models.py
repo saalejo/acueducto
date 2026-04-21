@@ -1,5 +1,7 @@
 from django.db import models
 
+from facturacion_electronica.models import Factura
+
 class Control(models.Model):
     empresa = models.CharField(max_length=255, null=True, blank=True, default=None)
     codemp = models.CharField(max_length=255, null=True, blank=True, default=None)
@@ -104,6 +106,7 @@ class Consumo(models.Model):
 class Movimiento(models.Model):
     codage = models.CharField(max_length=255, null=True, blank=True, default=None)
     numdoc = models.CharField(max_length=255, null=True, blank=True, default=None)
+    docref = models.IntegerField(default=0)
     numcom = models.CharField(max_length=255, null=True, blank=True, default=None)
     codcon = models.CharField(max_length=255, null=True, blank=True, default=None)
     fecmvt = models.CharField(max_length=255, null=True, blank=True, default=None)
@@ -113,6 +116,9 @@ class Movimiento(models.Model):
     debito = models.CharField(max_length=255, null=True, blank=True, default=None)
     credito = models.CharField(max_length=255, null=True, blank=True, default=None)
     fecha = models.CharField(max_length=255, null=True, blank=True, default=None)
+    facturado = models.BooleanField(default=False)
+    factura = models.ForeignKey(Factura, null=True, blank=True, default=None, on_delete=models.SET_NULL)
+    
     
     def __str__(self):
         return self.nitcte
@@ -141,6 +147,8 @@ class Subsidio(models.Model):
 class Elemento(models.Model):
     nombre = models.CharField(max_length=255, null=True, blank=True, default=None)
     formula = models.CharField(max_length=255, null=True, blank=True, default=None)
+    font = models.CharField(max_length=32, default="Times-Roman")
+    size = models.IntegerField(default=12)
     x = models.IntegerField(default=0)
     y = models.IntegerField(default=0)
     

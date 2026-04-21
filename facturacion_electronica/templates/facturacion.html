@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+
+<table class="table table-bordered">
+<thead>
+    <tr>
+    <th>Prefactura</th>
+    <th>Factura</th>
+    <th>Usuario</th>
+    <th>¿Es Válida?</th>
+    <th>
+        <button
+            href="{% url 'facturacion_electronica:facturar_todo' %}"
+            type="button"
+            class="btn btn-warning"
+            >
+            Facturar todo
+        </button>
+    </th>
+    </tr>
+</thead>
+<tbody>
+    {% for factura in facturas %}
+    <tr>
+        <td>{{ factura.prefactura }}</td>
+        <td>{{ factura.consecutivo }}</td>
+        <td>{{ factura.entidad.nombre }}</td>
+        <td>{% if factura.es_valida %}Sí{% else %}No{% endif %}</td>
+        <td>
+        {% if factura.cufe %}
+            <button
+                type="button"
+                class="btn btn-secondary"
+            >Imprimir</button>
+            <button type="button" class="btn btn-info">Notificar</button>
+        {% else %}
+            <button
+                href="{% url 'facturacion_electronica:facturar' factura_id=factura.id %}"
+                type="button"
+                class="btn btn-primary"
+                >
+                Facturar
+            </button>
+        {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+{% endblock %}
+
+

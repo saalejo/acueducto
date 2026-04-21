@@ -1,0 +1,105 @@
+{
+	"number": "{{ factura.consecutivo }}",
+	"type_document_id": 1,
+	"date": "{{ factura.fecha|date:'Y-m-d'}}",
+	"time": "{{ factura.hora }}:00",
+	"customer": {
+		"identification_number": {{ factura.entidad.identificacion }},
+		"name": "{{ factura.entidad.nombre }}",
+		"phone": "{{ factura.entidad.telefono }}",
+		"address": "{{ factura.entidad.direccion }}",
+		"email": "{{ factura.entidad.email }}",
+		"merchant_registration": "{{ factura.entidad.registroMercantil }}",
+		"type_document_identification_id": {{ factura.entidad.tipoIdentificacion }},
+		"type_organization_id": {{ factura.entidad.tipoOrganizacion }},
+		"municipality_id": {{ factura.entidad.ciudad }},
+		"type_regime_id": {{ factura.entidad.regimen }}
+	},
+	"payment_form": {
+		"payment_form_id": {{ factura.formaPago }},
+		"payment_method_id": {{ factura.metodoPago }},
+		"payment_due_date": "{{ factura.fechaPago|date:'Y-m-d' }}",
+		"duration_measure": "{{ factura.plazo }}"
+	},
+	"legal_monetary_totals": {
+		"line_extension_amount": "{{ factura.total }}.00",
+		"tax_exclusive_amount": "0.00",
+		"tax_inclusive_amount": "{{ factura.total }}.00",
+		"allowance_total_amount": "{{ factura.sumDescuentos }}.00",
+		"charge_total_amount": "0.00",
+		"payable_amount": "{{ factura.totalPagar }}.00"
+	},
+	"allowance_charges": [
+        {% for descuento in factura.facturadescuento_set.all %}            
+            {
+                "discount_id": {{ descuento.cod }},
+                "charge_indicator": false,
+                "allowance_charge_reason": "{{ descuento.concepto }}",
+                "amount": "{{ descuento.cantidad }}.00",
+                "base_amount": "{{ descuento.cantidad_base }}.00"
+            }{% if not forloop.last%},{% endif %}            
+		{% endfor %}
+	],
+	"tax_totals": [
+        {% for impuesto in factura.facturaimpuesto_set.all %}
+            {
+                "tax_id": {{ impuesto.cod }},
+                "tax_amount": "{{ impuesto.cantidad }}.00",
+                "percent": "{{ impuesto.porcentaje }}",
+                "taxable_amount": "{{ impuesto.cantidad_base }}.00"
+            }{% if not forloop.last%},{% endif %}
+        {% endfor %}
+        {% if factura.facturaimpuesto_set.all|length == 0 %}
+            {
+                "tax_id": 1,
+                "tax_amount": "0.00",
+                "percent": "0",
+                "taxable_amount": "0.00"
+            }
+        {% endif %}
+	],
+	"invoice_lines": [
+        {% for fila in factura.fila_set.all %}
+            {
+                "unit_measure_id": {{ fila.unidad_de_medida_cod }},
+                "invoiced_quantity": "{{ fila.cantidad }}",
+                "line_extension_amount": "{{ fila.importe }}.00",
+                "free_of_charge_indicator": false,
+                "allowance_charges": [
+                    {% for descuento in fila.descuento_set.all %}            
+                        {
+                            "discount_id": "{{ descuento.cod }}",
+                            "charge_indicator": false,
+                            "allowance_charge_reason": "{{ descuento.concepto }}",
+                            "amount": "{{ descuento.cantidad }}.00",
+                            "base_amount": "{{ descuento.cantidad_base }}.00"
+                        }{% if not forloop.last%},{% endif %}
+                    {% endfor %}
+                ],
+                "tax_totals": [
+                    {% for impuesto in fila.filaimpuesto_set.all %}
+                        {
+                            "tax_id": {{ impuesto.cod }},
+                            "tax_amount": "{{ impuesto.cantidad }}.00",
+                            "percent": "{{ impuesto.porcentaje }}",
+                            "taxable_amount": "{{ impuesto.cantidad_base }}.00"
+                        }{% if not forloop.last%},{% endif %}
+                    {% endfor %}
+                    {% if fila.filaimpuesto_set.all|length == 0 %}
+                        {
+                            "tax_id": 1,
+                            "tax_amount": "0.00",
+                            "percent": "0",
+                            "taxable_amount": "0.00"
+                        }
+                    {% endif %}
+                ],
+                "description": "{{ fila.descripcion }}",
+                "code": "{{ fila.descripcion|slice:':8' }}",
+                "type_item_identification_id": 4,
+                "price_amount": "{{ fila.valorUnitario }}.00",
+                "base_quantity": "{{ fila.cantidad }}"
+            }{% if not forloop.last%},{% endif %}
+        {% endfor %}
+	]
+}

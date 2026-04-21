@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from facturacion_electronica.helpers import preparar_facturas
 from util.helpers import generarDocumento, importarDocumento
 from util.resources import ConsumoResource, ControlResource, MovimientoResource, SubsidioResource, ClienteResource
 from django.shortcuts import redirect
@@ -26,6 +27,16 @@ def upload(request):
                     'errores': importarDocumento(request.FILES[clave], valor)
                 })
     context = { 'mensaje': 'Documentos importados con exito', 'errores': errores }
+    if not len(errores):
+        rechazadas, rechazadas_dian = preparar_facturas()
+        errores.append({
+            'documento': "rechazadas app",
+            'errores': rechazadas
+        })
+        errores.append({
+            'documento': "rechazadas dian",
+            'errores': rechazadas_dian
+        })
     return render(request, 'inicio.html', context)
 
 def exportar(request, fecha=None):

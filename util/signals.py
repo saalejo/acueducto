@@ -1,6 +1,6 @@
 import datetime
 from util.helpers import crearRuta
-from .models import Consumo, Ruta, Dispositivo
+from .models import Cliente, Consumo, Ruta, Dispositivo
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 import secrets
@@ -23,3 +23,9 @@ def after_save_consumo(sender, instance, **kwargs):
     if isinstance(instance.feccon, float):
         date = xlrd.xldate_as_datetime(instance.feccon, 0).date()
         Consumo.objects.filter(pk=instance.pk).update(feccon=date.strftime("%d/%m/%Y"))
+
+@receiver(post_save, sender=Cliente)
+def after_save_cliente(sender, instance, **kwargs):
+    if instance.nitcte is not None:
+        nitcte = instance.nitcte.strip().replace(".", "")
+        Cliente.objects.filter(pk=instance.pk).update(nitcte=nitcte)

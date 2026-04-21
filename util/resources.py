@@ -59,6 +59,8 @@ class ConsumoResource(resources.ModelResource):
 class MovimientoResource(resources.ModelResource):
     class Meta:
         model = Movimiento
+        import_id_fields = ['docref']
+        exclude = ['id', 'factura', 'facturado']
 
 class SubsidioResource(resources.ModelResource):
     class Meta:
