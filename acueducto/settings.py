@@ -11,19 +11,26 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-gzqq2ulxz$8v2ty2+(#3owj%9eucrn8qu2gg8dnq0ml_h%%35m'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+if DEBUG:
+    os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 ALLOWED_HOSTS = [
     '*'
@@ -134,12 +141,18 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID', '')
+GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET', '')
+GOOGLE_TOKEN_FILE = os.getenv('GOOGLE_TOKEN_FILE', 'google_token.json')
+GOOGLE_REDIRECT_URI = os.getenv('GOOGLE_REDIRECT_URI', 'http://localhost:8000/oauth2callback/')
+GOOGLE_DRIVE_FOLDER_ID = os.getenv('GOOGLE_DRIVE_FOLDER_ID', '')
+
 EMAIL_USE_TLS = True
 
-EMAIL_HOST = 'live.smtp.mailtrap.io'
-EMAIL_HOST_USER = 'api'
-EMAIL_HOST_PASSWORD = '66b63ece2dce41fd3dd8f0eb0683653d'
-EMAIL_PORT = 587
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
 
 EMAIL_SUBJECT = "811008921;ASOCIACION DE SOCIOS DEL ACUEDUCTO Y ALCANTARILLADO SONADORA GARZONAS MUNICIPIO DE EL CARMEN DE VIBORAL DEPARTAMENTO DE ANTIOQUIA;{};01"
 EMAIL_FROM = "acueducto.alcantarillado.sonadora.garzonas@agapanto.com.co"

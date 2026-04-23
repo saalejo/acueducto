@@ -3,3 +3,6 @@
 *.pyc
 */*.pyc
 __pycache__/
+.env
+tmp/
+google_token.json

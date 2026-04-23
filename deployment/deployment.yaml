@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: acueducto-deployment
+  namespace: acueducto-sonadora
+  labels:
+    app: acueducto
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: acueducto
+  template:
+    metadata:
+      labels:
+        app: acueducto
+    spec:
+        containers:
+            - name: acueducto
+              image: saalejo/acueducto:latest
+              imagePullPolicy: Always
+              ports:
+                - containerPort: 8080

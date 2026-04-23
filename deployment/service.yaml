@@ -2,7 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: acueducto-svc
-  namespace: acueducto-boqueron
+  namespace: acueducto-sonadora
 spec:
   type: NodePort
   selector:

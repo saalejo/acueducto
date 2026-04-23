@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card-body px-3 px-md-4 py-4">
+    <h4 class="card-title mb-4">Consultar Factura</h4>
+
+    <form method="get" class="mb-4">
+        <div class="d-flex flex-wrap gap-2">
+            <input
+                type="text"
+                name="codigo"
+                class="form-control"
+                style="max-width: 320px; min-width: 180px; flex: 1 1 180px;"
+                placeholder="Ingrese el código..."
+                value="{{ codigo }}"
+                inputmode="numeric"
+                autofocus
+            >
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+    </form>
+
+    {% if error %}
+        <div class="alert alert-warning">{{ error }}</div>
+    {% endif %}
+
+    {% if file_id %}
+        <div class="d-flex align-items-center gap-2 mb-3 flex-wrap">
+            <strong class="text-truncate me-1" style="max-width: 260px;">{{ file_name }}</strong>
+            <div class="btn-group btn-group-sm">
+                <a href="{% url 'util:proxy_pdf' file_id %}?download=1&nombre={{ file_name }}"
+                   class="btn btn-outline-secondary">
+                    Descargar
+                </a>
+                <a href="{% url 'util:proxy_pdf' file_id %}" target="_blank" rel="noopener"
+                   class="btn btn-outline-primary d-md-none">
+                    Abrir PDF
+                </a>
+            </div>
+        </div>
+
+        <iframe
+            src="{% url 'util:proxy_pdf' file_id %}"
+            class="d-none d-md-block w-100"
+            style="height: 80vh; border: 1px solid #dee2e6; border-radius: 4px;"
+        ></iframe>
+    {% endif %}
+</div>
+{% endblock %}

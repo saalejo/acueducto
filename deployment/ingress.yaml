@@ -8,10 +8,10 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
   name: acueducto-ingress
-  namespace: acueducto-aurora
+  namespace: acueducto-sonadora
 spec:
   rules:
-  - host: aurora.agapanto.com.co
+  - host: acueducto_sonadora_garzonas.agapanto.com.co
     http:
       paths:
       - path: /
@@ -23,5 +23,5 @@ spec:
               number: 8080
   tls:
   - hosts:
-    - aurora.agapanto.com.co
-    secretName: aurora-acueducto-com-co
+    - acueducto_sonadora_garzonas.agapanto.com.co
+    secretName: acueducto-sonadora-garzonas-agapanto-com-co
