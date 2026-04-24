@@ -11,53 +11,49 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-from dotenv import load_dotenv
-import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-load_dotenv(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = 'django-insecure-gzqq2ulxz$8v2ty2+(#3owj%9eucrn8qu2gg8dnq0ml_h%%35m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-if DEBUG:
-    os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+DEBUG = True
 
 ALLOWED_HOSTS = [
-    'acueducto-sonadora-garzonas.agapanto.com.co',
+    'laflorida.agapanto.com.co',
+    'boqueron.agapanto.com.co',
+    'aurora.agapanto.com.co',
+    'madera.agapanto.com.co',
+    'localhost'
 ]
-CORS_ALLOW_ALL_ORIGINS = True
+CSRF_TRUSTED_ORIGINS = [
+    'https://laflorida.agapanto.com.co',
+    'https://boqueron.agapanto.com.co',
+    'https://aurora.agapanto.com.co',
+    'https://madera.agapanto.com.co'
+]
 
 # Application definition
 
 INSTALLED_APPS = [
     'util.apps.UtilConfig',
-    'facturacion_electronica.apps.FacturacionElectronicaConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
-    'rest_framework',
-    'django_filters',
-    'import_export',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -91,8 +87,12 @@ WSGI_APPLICATION = 'acueducto.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+       'ENGINE': 'django.db.backends.postgresql',
+        'USER': 'postgres',
+        'NAME': 'acueducto',
+        'PASSWORD': 'acueducto_seguridad_2019',
+        'HOST': 'localhost',
+        'PORT': 5432,
     }
 }
 
@@ -130,33 +130,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
+
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / "static"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
-}
-
-GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID', '')
-GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET', '')
-GOOGLE_TOKEN_FILE = os.getenv('GOOGLE_TOKEN_FILE', 'google_token.json')
-GOOGLE_REDIRECT_URI = os.getenv('GOOGLE_REDIRECT_URI', 'https://acueducto-sonadora-garzonas.agapanto.com.co/oauth2callback/')
-GOOGLE_DRIVE_FOLDER_ID = os.getenv('GOOGLE_DRIVE_FOLDER_ID', '')
-
-EMAIL_USE_TLS = True
-
-EMAIL_HOST = os.getenv('EMAIL_HOST')
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
-
-
-
-
-EMAIL_SUBJECT = "811008921;ASOCIACION DE SOCIOS DEL ACUEDUCTO Y ALCANTARILLADO SONADORA GARZONAS MUNICIPIO DE EL CARMEN DE VIBORAL DEPARTAMENTO DE ANTIOQUIA;{};01"
-EMAIL_FROM = "acueducto.alcantarillado.sonadora.garzonas@agapanto.com.co"
-EMAIL_CC = "bermudezdiegoalejandro@gmail.com"

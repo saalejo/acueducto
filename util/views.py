@@ -1,35 +1,62 @@
-import io
 import os
+import threading
 from django.conf import settings
-from django.http import HttpResponse
+from django.http import HttpResponse, StreamingHttpResponse
 from django.shortcuts import render, redirect
 from google.oauth2.credentials import Credentials
-from google.auth.transport.requests import Request
+from google.auth.transport.requests import AuthorizedSession, Request
 from google_auth_oauthlib.flow import Flow
 from googleapiclient.discovery import build
-from googleapiclient.http import MediaIoBaseDownload
 from facturacion_electronica.helpers import preparar_facturas
 from util.helpers import generarDocumento, importarDocumento
 from util.resources import ConsumoResource, ControlResource, MovimientoResource, SubsidioResource, ClienteResource
 
 _DRIVE_SCOPES = ['https://www.googleapis.com/auth/drive.readonly']
 
-def _load_credentials():
+# Per-worker cache: credentials and service are built once and reused across threads.
+_state_lock = threading.Lock()
+_creds = None
+_service = None
+
+def _refresh_state():
+    """Load/refresh credentials and rebuild service if needed. Must hold _state_lock."""
+    global _creds, _service
     token_file = settings.GOOGLE_TOKEN_FILE
-    if not os.path.exists(token_file):
-        return None
-    creds = Credentials.from_authorized_user_file(token_file, _DRIVE_SCOPES)
-    if creds and creds.expired and creds.refresh_token:
-        creds.refresh(Request())
-        with open(token_file, 'w') as f:
-            f.write(creds.to_json())
-    return creds if creds and creds.valid else None
+    if _creds is None:
+        if not os.path.exists(token_file):
+            token_json = os.environ.get('GOOGLE_TOKEN_JSON')
+            if not token_json:
+                raise RuntimeError('Google Drive no autorizado. Visita /google-auth/ para autorizar.')
+            with open(token_file, 'w') as f:
+                f.write(token_json)
+        _creds = Credentials.from_authorized_user_file(token_file, _DRIVE_SCOPES)
+    if _creds.expired and _creds.refresh_token:
+        _creds.refresh(Request())
+        try:
+            with open(token_file, 'w') as f:
+                f.write(_creds.to_json())
+        except OSError:
+            pass
+    if not _creds.valid:
+        raise RuntimeError('Google Drive no autorizado. Visita /google-auth/ para autorizar.')
+    if _service is None:
+        _service = build('drive', 'v3', credentials=_creds)
+
+def _drive_creds():
+    with _state_lock:
+        _refresh_state()
+        return _creds
 
 def _drive_service():
-    creds = _load_credentials()
-    if creds is None:
-        raise RuntimeError('Google Drive no autorizado. Visita /google-auth/ para autorizar.')
-    return build('drive', 'v3', credentials=creds)
+    with _state_lock:
+        _refresh_state()
+        return _service
+
+def _reset_drive_state():
+    global _creds, _service
+    with _state_lock:
+        _creds = None
+        _service = None
 
 def _oauth_flow():
     client_config = {
@@ -50,11 +77,25 @@ def google_auth(request):
     return redirect(auth_url)
 
 def google_auth_callback(request):
-    flow = _oauth_flow()
+    state = request.GET.get('state')
+    client_config = {
+        'web': {
+            'client_id': settings.GOOGLE_CLIENT_ID,
+            'client_secret': settings.GOOGLE_CLIENT_SECRET,
+            'auth_uri': 'https://accounts.google.com/o/oauth2/auth',
+            'token_uri': 'https://oauth2.googleapis.com/token',
+            'redirect_uris': [settings.GOOGLE_REDIRECT_URI],
+        }
+    }
+    flow = Flow.from_client_config(client_config, scopes=_DRIVE_SCOPES,
+                                   redirect_uri=settings.GOOGLE_REDIRECT_URI,
+                                   state=state)
+    os.environ.setdefault('OAUTHLIB_INSECURE_TRANSPORT', '1')
     flow.fetch_token(authorization_response=request.build_absolute_uri())
     creds = flow.credentials
     with open(settings.GOOGLE_TOKEN_FILE, 'w') as f:
         f.write(creds.to_json())
+    _reset_drive_state()
     return redirect('util:consultar_factura')
 
 documentos = [
@@ -68,7 +109,7 @@ documentos = [
 def inicio(request):
     return redirect("/static/spa/index.html")
 
-def upload(request):   
+def upload(request):
     errores = []
     if request.method == 'POST':
         for clave, valor in documentos:
@@ -127,17 +168,14 @@ def consultar_factura(request):
 
 def proxy_pdf(request, file_id):
     try:
-        service = _drive_service()
-        media_request = service.files().get_media(fileId=file_id, supportsAllDrives=True)
-        buf = io.BytesIO()
-        downloader = MediaIoBaseDownload(buf, media_request)
-        done = False
-        while not done:
-            _, done = downloader.next_chunk()
-        buf.seek(0)
+        creds = _drive_creds()
+        session = AuthorizedSession(creds)
+        url = f'https://www.googleapis.com/drive/v3/files/{file_id}?alt=media&supportsAllDrives=true'
+        r = session.get(url, stream=True)
+        r.raise_for_status()
         disposition = 'attachment' if request.GET.get('download') else 'inline'
         file_name = request.GET.get('nombre', 'factura.pdf')
-        response = HttpResponse(buf.read(), content_type='application/pdf')
+        response = StreamingHttpResponse(r.iter_content(chunk_size=8192), content_type='application/pdf')
         response['Content-Disposition'] = f'{disposition}; filename="{file_name}"'
         response['X-Frame-Options'] = 'SAMEORIGIN'
         return response
@@ -147,4 +185,3 @@ def proxy_pdf(request, file_id):
 
 def exportarConsumos(request):
     dataset = ConsumoResource().export()
-    

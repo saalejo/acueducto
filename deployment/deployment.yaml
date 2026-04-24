@@ -21,3 +21,13 @@ spec:
               imagePullPolicy: Always
               ports:
                 - containerPort: 8080
+              envFrom:
+                - secretRef:
+                    name: acueducto-secrets
+              resources:
+                requests:
+                  cpu: "50m"
+                  memory: "128Mi"
+                limits:
+                  cpu: "300m"
+                  memory: "384Mi"

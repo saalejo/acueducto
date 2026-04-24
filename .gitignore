@@ -6,3 +6,4 @@ __pycache__/
 .env
 tmp/
 google_token.json
+deployment/secret.yaml

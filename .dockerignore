@@ -1,3 +1,9 @@
 /acueducto/settings.py
 db.sqlite3
 venv
+.env
+.git
+__pycache__
+*.pyc
+*.pyo
+.pytest_cache
