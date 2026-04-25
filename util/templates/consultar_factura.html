@@ -1,8 +1,35 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
 <div class="card-body px-3 px-md-4 py-4">
-    <h4 class="card-title mb-4">Consultar Factura</h4>
+
+    <!-- Header institucional -->
+    <div class="d-flex flex-column flex-md-row align-items-center gap-3 mb-4 pb-3" style="border-bottom: 2px solid #003580;">
+        <img src="{% static 'img/logo_sonadora.jpg' %}" alt="Logo Acueducto Sonadora Garzonas"
+             class="mx-auto mx-md-0"
+             style="height: 140px; width: auto; flex-shrink: 0;">
+        <div class="text-center flex-grow-1">
+            <div class="fw-bold" style="font-size: clamp(0.85rem, 3vw, 1rem); color: #003580;">
+                ASOCIACIÓN DE SOCIOS DEL ACUEDUCTO Y ALCANTARILLADO<br>
+                SONADORA-GARZONAS
+            </div>
+            <div style="font-size: clamp(0.72rem, 2.5vw, 0.82rem);">Nit. 811.008.921-7 / El Carmen de Viboral, Antioquia</div>
+            <div style="font-size: clamp(0.72rem, 2.5vw, 0.82rem);">E-mail: sonadora.garzonas@gmail.com</div>
+            <div style="font-size: clamp(0.72rem, 2.5vw, 0.82rem);">Celular: 3218512100 - 3146799599 - 3212503176</div>
+            <div style="font-size: clamp(0.72rem, 2.5vw, 0.82rem);">Página web: <a href="https://sonadoragarzonas.wixsite.com/acueducto" target="_blank" rel="noopener">sonadoragarzonas.wixsite.com/acueducto</a></div>
+            <div class="fw-bold mt-1" style="font-size: clamp(0.78rem, 2.5vw, 0.85rem); color: #003580;">
+                FACTURA DE SERVICIOS PÚBLICOS DOMICILIARIOS
+            </div>
+            <div style="font-size: clamp(0.68rem, 2vw, 0.78rem);">Vigilado Superintendencia de Servicios Públicos Domiciliarios</div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <a href="https://sonadoragarzonas.wixsite.com/acueducto" class="btn btn-secondary">&#8592; Volver</a>
+    </div>
+
+    <h4 class="card-title mb-4">Digite el código de suscriptor o usuario para consultar su factura</h4>
 
     <form method="get" class="mb-4">
         <div class="d-flex flex-wrap gap-2">
